@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/home_nav"
+    android:title="HOME"
+    android:icon="@drawable/home_ic"/>
+
+
+
+    <item android:id="@+id/call_nav"
+    android:title="FAKE CALLS"
+    android:icon="@drawable/fakecall_ic"/>
+
+    <item android:id="@+id/contacts_nav"
+        android:title="CONTACTS"
+        android:icon="@drawable/add_contacts_ic"/>
+
+    <item android:id="@+id/about_nav"
+        android:title="ABOUT"
+        android:icon="@drawable/about_ic"/>
+
+    <item android:id="@+id/profile_nav"
+        android:title="PROFILE"
+        android:icon="@drawable/profile_ic"/>
+
+
+
+
+
+
+</menu>
