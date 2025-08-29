@@ -9,40 +9,34 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class MemberAdapter(
-    private val contactList: MutableList<ContactsModel>
-) : RecyclerView.Adapter<MemberAdapter.ViewHolder>() {
+    private val contactListMembers: MutableList<ContactsModel>,
+    private val onUpdateClick: (position: Int) -> Unit,   // callback for update
+    private val onDeleteClick: (position: Int) -> Unit    // callback for delete
+) : RecyclerView.Adapter<MemberAdapter.Viewholder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_mycontacts, parent, false)
-        return ViewHolder(itemView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
+        val item = LayoutInflater.from(parent.context).inflate(R.layout.item_mycontacts, parent, false)
+        return Viewholder(item)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = contactList[position]
-        holder.name.text = item.name
+    override fun onBindViewHolder(holder: Viewholder, position: Int) {
+        val item = contactListMembers[position]
+        holder.ContactName.text = item.name
         holder.address.text = item.address
-        holder.phone.text = item.phone
+        holder.phoneNumber.text = item.phone
 
-        // Update / Delete buttons (implement later)
-        holder.btnUpdate.setOnClickListener {
-            // TODO: open dialog to update contact
-        }
-        holder.btnDelete.setOnClickListener {
-            contactList.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, contactList.size)
-        }
+        holder.btnUpdate.setOnClickListener { onUpdateClick(position) }
+        holder.btnDelete.setOnClickListener { onDeleteClick(position) }
     }
 
-    override fun getItemCount(): Int = contactList.size
+    override fun getItemCount() = contactListMembers.size
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imgUser: ImageView = itemView.findViewById(R.id.img_user)
-        val name: TextView = itemView.findViewById(R.id.name)
-        val address: TextView = itemView.findViewById(R.id.address)
-        val phone: TextView = itemView.findViewById(R.id.phone_number)
-        val btnUpdate: Button = itemView.findViewById(R.id.btn_update)
-        val btnDelete: Button = itemView.findViewById(R.id.btn_delete)
+    class Viewholder(item: View) : RecyclerView.ViewHolder(item) {
+        val ImgUser: ImageView = item.findViewById(R.id.img_user)
+        val ContactName: TextView = item.findViewById(R.id.name)
+        val address: TextView = item.findViewById(R.id.address)
+        val phoneNumber: TextView = item.findViewById(R.id.phone_number)
+        val btnUpdate: Button = item.findViewById(R.id.btn_update)
+        val btnDelete: Button = item.findViewById(R.id.btn_delete)
     }
 }
