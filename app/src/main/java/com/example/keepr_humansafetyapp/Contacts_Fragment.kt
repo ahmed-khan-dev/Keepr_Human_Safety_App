@@ -7,14 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 
 class Contacts_Fragment : Fragment() {
 
     private lateinit var adapter: MemberAdapter
     private val ContactListMembers = mutableListOf<ContactsModel>()
+
+    private lateinit var database: FirebaseDatabase
+    private lateinit var contactsRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,25 +34,40 @@ class Contacts_Fragment : Fragment() {
         val recycler = view.findViewById<RecyclerView>(R.id.Contacts_recycler)
         recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        // Sample initial contacts
-        ContactListMembers.add(ContactsModel("Ahmed Khan","Karimi Apt 101","+919876543210"))
-        ContactListMembers.add(ContactsModel("Shaan Ali Khan","501 Regency 2","+918828130894"))
-
         adapter = MemberAdapter(ContactListMembers,
             onUpdateClick = { pos -> showUpdateContactDialog(pos) },
-            onDeleteClick = { pos ->
-                ContactListMembers.removeAt(pos)
-                adapter.notifyItemRemoved(pos)
-            }
+            onDeleteClick = { pos -> deleteContact(pos) }
         )
         recycler.adapter = adapter
 
+        database = FirebaseDatabase.getInstance()
+        contactsRef = database.getReference("contacts")
+
+        // Fetch contacts from Firebase
+        fetchContactsFromFirebase()
 
         // Add Contact Button
         val btnAdd = view.findViewById<Button>(R.id.btn_add_contact)
         btnAdd.setOnClickListener {
             showAddContactDialog()
         }
+    }
+
+    private fun fetchContactsFromFirebase() {
+        contactsRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ContactListMembers.clear()
+                for (child in snapshot.children) {
+                    val contact = child.getValue(ContactsModel::class.java)
+                    contact?.let { ContactListMembers.add(it) }
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "Failed to fetch contacts", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun showAddContactDialog() {
@@ -61,20 +81,33 @@ class Contacts_Fragment : Fragment() {
         val etPhone = dialogView.findViewById<EditText>(R.id.et_phone)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_contact)
 
+        // Add hint for international format
+        etPhone.hint = "Enter number in international format, e.g. +917208394369"
+
         btnSave.setOnClickListener {
             val name = etName.text.toString().trim()
             val address = etAddress.text.toString().trim()
             val phone = etPhone.text.toString().trim()
 
             if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
-                ContactListMembers.add(ContactsModel(name, address, phone))
-                adapter.notifyItemInserted(ContactListMembers.size - 1)
-                dialog.dismiss()
+                val newContactId = contactsRef.push().key
+                val newContact = ContactsModel(name, address, phone)
+                newContactId?.let {
+                    contactsRef.child(it).setValue(newContact).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(requireContext(), "Contact added", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        } else {
+                            Toast.makeText(requireContext(), "Failed to add contact", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
         }
 
         dialog.show()
     }
+
     private fun showUpdateContactDialog(position: Int) {
         val contact = ContactListMembers[position]
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_contact, null)
@@ -87,6 +120,8 @@ class Contacts_Fragment : Fragment() {
         val etPhone = dialogView.findViewById<EditText>(R.id.et_phone)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_contact)
 
+        etPhone.hint = "Enter number in international format, e.g. +917208394369"
+
         // Pre-fill existing values
         etName.setText(contact.name)
         etAddress.setText(contact.address)
@@ -98,20 +133,46 @@ class Contacts_Fragment : Fragment() {
             val phone = etPhone.text.toString().trim()
 
             if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
-                ContactListMembers[position] = ContactsModel(name, address, phone)
-                adapter.notifyItemChanged(position)
-                dialog.dismiss()
+                // Update Firebase
+                contactsRef.orderByChild("phone").equalTo(contact.phone)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for (child in snapshot.children) {
+                                child.ref.setValue(ContactsModel(name, address, phone))
+                            }
+                            Toast.makeText(requireContext(), "Contact updated", Toast.LENGTH_SHORT).show()
+                            dialog.dismiss()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {}
+                    })
             }
         }
 
         dialog.show()
     }
 
+    private fun deleteContact(position: Int) {
+        val contact = ContactListMembers[position]
+        contactsRef.orderByChild("phone").equalTo(contact.phone)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (child in snapshot.children) {
+                        child.ref.removeValue()
+                    }
+                    Toast.makeText(requireContext(), "Contact deleted", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onCancelled(error: DatabaseError) {}
+            })
+    }
 
     companion object {
         fun newInstance() = Contacts_Fragment()
     }
 }
+
+
 //git remote add origin https://github.com/ahmed-khan-dev/Keepr_Human_Safety_App.git
 // git branch -M main
 // git push -u origin main
