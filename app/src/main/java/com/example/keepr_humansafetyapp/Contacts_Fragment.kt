@@ -81,13 +81,18 @@ class Contacts_Fragment : Fragment() {
         val etPhone = dialogView.findViewById<EditText>(R.id.et_phone)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_contact)
 
-        // Add hint for international format
-        etPhone.hint = "Enter number in international format, e.g. +917208394369"
+
+
 
         btnSave.setOnClickListener {
             val name = etName.text.toString().trim()
             val address = etAddress.text.toString().trim()
-            val phone = etPhone.text.toString().trim()
+            var phone = etPhone.text.toString().trim()
+
+            // Automatically add +91 if not present
+            if (!phone.startsWith("+")) {
+                phone = "+91$phone"
+            }
 
             if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
                 val newContactId = contactsRef.push().key
@@ -104,6 +109,7 @@ class Contacts_Fragment : Fragment() {
                 }
             }
         }
+
 
         dialog.show()
     }
