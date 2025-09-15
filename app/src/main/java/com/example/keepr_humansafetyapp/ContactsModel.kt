@@ -1,9 +1,8 @@
 package com.example.keepr_humansafetyapp
 
 data class ContactsModel(
-    val name: String = "",
-    val address: String = "",
-    val phone: String = ""
+    var id: String? = null,   // Firestore document ID
+    var name: String = "",
+    var address: String = "",
+    var phone: String = ""
 )
-
-

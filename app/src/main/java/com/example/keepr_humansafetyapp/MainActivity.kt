@@ -1,14 +1,12 @@
 package com.example.keepr_humansafetyapp
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,16 +17,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var profileFragment: Profile_Fragment
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
-
-
-
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -43,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         contactsFragment = Contacts_Fragment.newInstance()
         profileFragment = Profile_Fragment.newInstance()
 
-        // Add all fragments once and hide them except Maps
+        // Add fragments initially, only show MapsFragment
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.container, mapsFragment, "MAPS")
         transaction.add(R.id.container, aboutFragment, "ABOUT").hide(aboutFragment)
@@ -52,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         transaction.add(R.id.container, profileFragment, "PROFILE").hide(profileFragment)
         transaction.commit()
 
-        val bottomNav: BottomNavigationView = findViewById(R.id.bottomNavigationView)
+        // Bottom Navigation setup
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home_nav -> showFragment(mapsFragment)
@@ -64,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        // Default selection on login
         bottomNav.selectedItemId = R.id.home_nav
     }
 
@@ -79,4 +73,6 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 }
-
+//git remote add origin https://github.com/ahmed-khan-dev/Keepr_Human_Safety_App.git
+//git branch -M main
+//git push -u origin main

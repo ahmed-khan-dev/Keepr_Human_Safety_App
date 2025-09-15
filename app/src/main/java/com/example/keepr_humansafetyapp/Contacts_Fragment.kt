@@ -11,15 +11,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Contacts_Fragment : Fragment() {
 
     private lateinit var adapter: MemberAdapter
-    private val ContactListMembers = mutableListOf<ContactsModel>()
+    private val contactListMembers = mutableListOf<ContactsModel>()
 
-    private lateinit var database: FirebaseDatabase
-    private lateinit var contactsRef: DatabaseReference
+    private val firestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private var userId: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +36,20 @@ class Contacts_Fragment : Fragment() {
         val recycler = view.findViewById<RecyclerView>(R.id.Contacts_recycler)
         recycler.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = MemberAdapter(ContactListMembers,
+        adapter = MemberAdapter(contactListMembers,
             onUpdateClick = { pos -> showUpdateContactDialog(pos) },
             onDeleteClick = { pos -> deleteContact(pos) }
         )
         recycler.adapter = adapter
 
-        database = FirebaseDatabase.getInstance()
-        contactsRef = database.getReference("contacts")
+        userId = auth.currentUser?.uid
+        if (userId == null) {
+            Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        // Fetch contacts from Firebase
-        fetchContactsFromFirebase()
+        // Fetch contacts from Firestore
+        fetchContactsFromFirestore()
 
         // Add Contact Button
         val btnAdd = view.findViewById<Button>(R.id.btn_add_contact)
@@ -53,21 +58,24 @@ class Contacts_Fragment : Fragment() {
         }
     }
 
-    private fun fetchContactsFromFirebase() {
-        contactsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                ContactListMembers.clear()
-                for (child in snapshot.children) {
-                    val contact = child.getValue(ContactsModel::class.java)
-                    contact?.let { ContactListMembers.add(it) }
+    private fun fetchContactsFromFirestore() {
+        firestore.collection("users")
+            .document(userId!!)
+            .collection("contacts")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Toast.makeText(requireContext(), "Failed to fetch contacts", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
+
+                contactListMembers.clear()
+                snapshot?.documents?.forEach { document ->
+                    val contact = document.toObject(ContactsModel::class.java)
+                    contact?.id = document.id  // save document ID
+                    contact?.let { contactListMembers.add(it) }
                 }
                 adapter.notifyDataSetChanged()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), "Failed to fetch contacts", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     private fun showAddContactDialog() {
@@ -81,41 +89,36 @@ class Contacts_Fragment : Fragment() {
         val etPhone = dialogView.findViewById<EditText>(R.id.et_phone)
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_contact)
 
-
-
-
         btnSave.setOnClickListener {
             val name = etName.text.toString().trim()
             val address = etAddress.text.toString().trim()
             var phone = etPhone.text.toString().trim()
 
-            // Automatically add +91 if not present
             if (!phone.startsWith("+")) {
                 phone = "+91$phone"
             }
 
             if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
-                val newContactId = contactsRef.push().key
-                val newContact = ContactsModel(name, address, phone)
-                newContactId?.let {
-                    contactsRef.child(it).setValue(newContact).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(requireContext(), "Contact added", Toast.LENGTH_SHORT).show()
-                            dialog.dismiss()
-                        } else {
-                            Toast.makeText(requireContext(), "Failed to add contact", Toast.LENGTH_SHORT).show()
-                        }
+                val newContact = ContactsModel(name = name, address = address, phone = phone)
+                firestore.collection("users")
+                    .document(userId!!)
+                    .collection("contacts")
+                    .add(newContact)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Contact added", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
                     }
-                }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Failed to add contact", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
-
 
         dialog.show()
     }
 
     private fun showUpdateContactDialog(position: Int) {
-        val contact = ContactListMembers[position]
+        val contact = contactListMembers[position]
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_contact, null)
         val dialog = AlertDialog.Builder(requireContext())
             .setView(dialogView)
@@ -127,8 +130,6 @@ class Contacts_Fragment : Fragment() {
         val btnSave = dialogView.findViewById<Button>(R.id.btn_save_contact)
 
         etPhone.hint = "Enter number in international format, e.g. +917208394369"
-
-        // Pre-fill existing values
         etName.setText(contact.name)
         etAddress.setText(contact.address)
         etPhone.setText(contact.phone)
@@ -136,22 +137,25 @@ class Contacts_Fragment : Fragment() {
         btnSave.setOnClickListener {
             val name = etName.text.toString().trim()
             val address = etAddress.text.toString().trim()
-            val phone = etPhone.text.toString().trim()
+            var phone = etPhone.text.toString().trim()
 
-            if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
-                // Update Firebase
-                contactsRef.orderByChild("phone").equalTo(contact.phone)
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            for (child in snapshot.children) {
-                                child.ref.setValue(ContactsModel(name, address, phone))
-                            }
-                            Toast.makeText(requireContext(), "Contact updated", Toast.LENGTH_SHORT).show()
-                            dialog.dismiss()
-                        }
+            if (!phone.startsWith("+")) {
+                phone = "+91$phone"
+            }
 
-                        override fun onCancelled(error: DatabaseError) {}
-                    })
+            if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty() && contact.id != null) {
+                firestore.collection("users")
+                    .document(userId!!)
+                    .collection("contacts")
+                    .document(contact.id!!)
+                    .set(ContactsModel(name = name, address = address, phone = phone))
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Contact updated", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Failed to update contact", Toast.LENGTH_SHORT).show()
+                    }
             }
         }
 
@@ -159,26 +163,23 @@ class Contacts_Fragment : Fragment() {
     }
 
     private fun deleteContact(position: Int) {
-        val contact = ContactListMembers[position]
-        contactsRef.orderByChild("phone").equalTo(contact.phone)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (child in snapshot.children) {
-                        child.ref.removeValue()
-                    }
+        val contact = contactListMembers[position]
+        if (contact.id != null) {
+            firestore.collection("users")
+                .document(userId!!)
+                .collection("contacts")
+                .document(contact.id!!)
+                .delete()
+                .addOnSuccessListener {
                     Toast.makeText(requireContext(), "Contact deleted", Toast.LENGTH_SHORT).show()
                 }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+                .addOnFailureListener {
+                    Toast.makeText(requireContext(), "Failed to delete contact", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     companion object {
         fun newInstance() = Contacts_Fragment()
     }
 }
-
-
-//git remote add origin https://github.com/ahmed-khan-dev/Keepr_Human_Safety_App.git
-// git branch -M main
-// git push -u origin main
