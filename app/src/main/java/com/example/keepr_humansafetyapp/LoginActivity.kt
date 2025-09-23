@@ -29,12 +29,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
-    // Helper function to open MainActivity after login success
-    fun openMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()  // So that user cannot go back to LoginActivity
-    }
+
 
     fun openRegisterFragment() {
         supportFragmentManager.beginTransaction()

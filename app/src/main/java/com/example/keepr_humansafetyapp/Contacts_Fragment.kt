@@ -48,10 +48,8 @@ class Contacts_Fragment : Fragment() {
             return
         }
 
-        // Fetch contacts from Firestore
         fetchContactsFromFirestore()
 
-        // Add Contact Button
         val btnAdd = view.findViewById<Button>(R.id.btn_add_contact)
         btnAdd.setOnClickListener {
             showAddContactDialog()
@@ -71,11 +69,16 @@ class Contacts_Fragment : Fragment() {
                 contactListMembers.clear()
                 snapshot?.documents?.forEach { document ->
                     val contact = document.toObject(ContactsModel::class.java)
-                    contact?.id = document.id  // save document ID
+                    contact?.id = document.id
                     contact?.let { contactListMembers.add(it) }
                 }
                 adapter.notifyDataSetChanged()
             }
+    }
+
+    private fun isValidPhoneNumber(phone: String): Boolean {
+        val digitsOnly = phone.replace(Regex("\\D"), "")
+        return digitsOnly.length == 10
     }
 
     private fun showAddContactDialog() {
@@ -94,8 +97,12 @@ class Contacts_Fragment : Fragment() {
             val address = etAddress.text.toString().trim()
             var phone = etPhone.text.toString().trim()
 
-            if (!phone.startsWith("+")) {
-                phone = "+91$phone"
+            if (!phone.startsWith("+")) phone = "+91$phone"
+            val phoneDigits = phone.removePrefix("+91")
+
+            if (!isValidPhoneNumber(phoneDigits)) {
+                Toast.makeText(requireContext(), "Enter a valid 10-digit number", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty()) {
@@ -139,8 +146,12 @@ class Contacts_Fragment : Fragment() {
             val address = etAddress.text.toString().trim()
             var phone = etPhone.text.toString().trim()
 
-            if (!phone.startsWith("+")) {
-                phone = "+91$phone"
+            if (!phone.startsWith("+")) phone = "+91$phone"
+            val phoneDigits = phone.removePrefix("+91")
+
+            if (!isValidPhoneNumber(phoneDigits)) {
+                Toast.makeText(requireContext(), "Enter a valid 10-digit number", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             if (name.isNotEmpty() && address.isNotEmpty() && phone.isNotEmpty() && contact.id != null) {

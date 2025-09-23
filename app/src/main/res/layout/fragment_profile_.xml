@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp"
+    android:background="@color/bg_col"
     android:gravity="center_horizontal">
 
     <!-- Title -->

@@ -15,7 +15,6 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -37,10 +36,11 @@ class MapsFragment : Fragment() {
     private var isFirstLocation = true
     private var isTracking = false
 
-    private val firestore = FirebaseFirestore.getInstance()
-    private val contactNumbers = mutableListOf<ContactsModel>()
+    private var latestLocation: LatLng? = null
 
-    private val SMS_INTERVAL = 60 * 1000L // 1 minute
+    private val firestore = FirebaseFirestore.getInstance()
+    private val contactNumbers = mutableListOf<String>()
+    private val SMS_INTERVAL = 2 * 60 * 1000L // 2 minutes
 
     private val mapReadyCallback = OnMapReadyCallback { map ->
         googleMap = map
@@ -50,22 +50,18 @@ class MapsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_maps, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_maps, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(mapReadyCallback)
 
         fetchContactsFromFirestore()
 
         val btnTrackMe: Button = view.findViewById(R.id.btnTrackMe)
-
         btnTrackMe.setOnClickListener {
             if (contactNumbers.isEmpty()) {
                 Toast.makeText(requireContext(), "Add at least one contact to enable tracking", Toast.LENGTH_SHORT).show()
@@ -77,7 +73,10 @@ class MapsFragment : Fragment() {
             Toast.makeText(requireContext(), if (isTracking) "Tracking Started" else "Tracking Stopped", Toast.LENGTH_SHORT).show()
 
             if (isTracking) {
-                promptWhatsAppSending()
+                // Launch periodic SMS coroutine
+                startPeriodicSms()
+                // Launch WhatsApp share sheet once
+                shareLocationViaWhatsApp()
             }
         }
     }
@@ -91,8 +90,8 @@ class MapsFragment : Fragment() {
                 if (error != null) return@addSnapshotListener
                 contactNumbers.clear()
                 snapshot?.documents?.forEach { doc ->
-                    val contact = doc.toObject(ContactsModel::class.java)
-                    contact?.let { contactNumbers.add(it) }
+                    val phone = doc.getString("phone")
+                    phone?.let { contactNumbers.add(it) }
                 }
             }
     }
@@ -113,41 +112,42 @@ class MapsFragment : Fragment() {
         fusedLocationClient.requestLocationUpdates(locationRequest, object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 val location: Location = locationResult.lastLocation ?: return
-                val userLatLng = LatLng(location.latitude, location.longitude)
+                latestLocation = LatLng(location.latitude, location.longitude)
 
                 if (currentMarker == null) {
                     currentMarker = googleMap.addMarker(
                         com.google.android.gms.maps.model.MarkerOptions()
-                            .position(userLatLng)
+                            .position(latestLocation!!)
                             .title("You are here")
                     )
                 } else {
-                    currentMarker!!.position = userLatLng
+                    currentMarker!!.position = latestLocation!!
                 }
 
                 if (isFirstLocation) {
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 16f))
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latestLocation!!, 16f))
                     isFirstLocation = false
-                }
-
-                if (isTracking) {
-                    lifecycleScope.launch(Dispatchers.IO) {
-                        while (isTracking) {
-                            contactNumbers.forEach { contact ->
-                                sendLocationViaSMS(location.latitude, location.longitude, contact.phone)
-                            }
-                            delay(SMS_INTERVAL)
-                        }
-                    }
                 }
             }
         }, requireActivity().mainLooper)
     }
 
+    private fun startPeriodicSms() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            while (isTracking) {
+                latestLocation?.let { latLng ->
+                    contactNumbers.forEach { phone ->
+                        sendLocationViaSMS(latLng.latitude, latLng.longitude, phone)
+                    }
+                }
+                delay(SMS_INTERVAL)
+            }
+        }
+    }
+
     private fun sendLocationViaSMS(lat: Double, lng: Double, phoneNumber: String) {
         val locationUrl = "https://www.google.com/maps?q=$lat,$lng"
-        val message = "Help! This is  My current location: $locationUrl"
-
+        val message = "Help! My current location: $locationUrl"
         try {
             val smsManager = SmsManager.getDefault()
             smsManager.sendTextMessage(phoneNumber, null, message, null, null)
@@ -158,31 +158,18 @@ class MapsFragment : Fragment() {
         }
     }
 
-    private fun promptWhatsAppSending() {
-        requireActivity().runOnUiThread {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Send WhatsApp Location?")
-                .setMessage("Do you want to send your current location via WhatsApp to your contacts now?")
-                .setPositiveButton("Yes") { _, _ ->
-                    contactNumbers.forEach { contact ->
-                        sendLocationViaWhatsApp(contact.phone)
-                    }
-                }
-                .setNegativeButton("No", null)
-                .show()
-        }
-    }
+    private fun shareLocationViaWhatsApp() {
+        latestLocation?.let { latLng ->
+            val locationUrl = "https://www.google.com/maps?q=${latLng.latitude},${latLng.longitude}"
+            val message = "Help! My current location: $locationUrl"
 
-    private fun sendLocationViaWhatsApp(phoneNumber: String) {
-        val locationUrl = "https://www.google.com/maps?q=${currentMarker?.position?.latitude},${currentMarker?.position?.longitude}"
-        val message = "Help! My current location: $locationUrl"
-
-        try {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse("https://wa.me/$phoneNumber?text=${Uri.encode(message)}")
-            startActivity(intent)
-        } catch (e: Exception) {
-            requireActivity().runOnUiThread {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, message)
+            intent.setPackage("com.whatsapp") // only WhatsApp
+            try {
+                startActivity(intent)
+            } catch (e: Exception) {
                 Toast.makeText(requireContext(), "WhatsApp not installed", Toast.LENGTH_SHORT).show()
             }
         }
