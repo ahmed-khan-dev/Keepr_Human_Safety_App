@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black">
+
+    <!-- VideoView full screen -->
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Bottom End Call Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnEndVideoCall"
+        android:layout_width="120dp"
+        android:layout_height="48dp"
+
+        android:textColor="@android:color/white"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/red"
+        app:icon="@drawable/phone"
+        app:iconGravity="textStart"
+        app:iconSize="24dp"
+        app:iconTint="@null"
+        android:padding="8dp"/>
+
+</FrameLayout>
