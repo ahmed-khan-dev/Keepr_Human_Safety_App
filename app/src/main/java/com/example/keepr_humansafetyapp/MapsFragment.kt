@@ -79,6 +79,31 @@ class MapsFragment : Fragment() {
                 shareLocationViaWhatsApp()
             }
         }
+
+        val btnNearestPolice : Button=view.findViewById(R.id.nearestpolice)
+
+        btnNearestPolice.setOnClickListener{
+            if (ActivityCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return@setOnClickListener
+            }
+            fusedLocationClient.lastLocation.addOnSuccessListener { location -> location?.let {
+                handleNearestPoliceStation(it.latitude,it.longitude) }
+            }
+        }
     }
 
     private fun fetchContactsFromFirestore() {
@@ -171,6 +196,32 @@ class MapsFragment : Fragment() {
                 startActivity(intent)
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "WhatsApp not installed", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun handleNearestPoliceStation(userLat: Double,userLng: Double){
+        val stations = listOf(
+            PoliceStation("PLC-1",userLat + 19.269328,userLng - 72.870528 , "7208394369"),
+            PoliceStation("PLC-2", userLat + 19.269367,userLng - 72.870415 , "9920947684"),
+            PoliceStation("PLC-3", userLat + 19.286274,userLng - 72.864042 , "8828130894")
+        )
+        val nearest = stations.minByOrNull { station ->
+            Haversine.haversine(userLat, userLng, station.lat, station.lng)
+        }
+
+        nearest?.let { station ->
+            Toast.makeText(requireContext(), "Nearest Police Station Found: ${station.name}", Toast.LENGTH_LONG).show()
+
+            try {
+
+                val intent = Intent(Intent.ACTION_DIAL).apply {
+                    data = Uri.parse("tel:${station.phone}")
+                }
+                startActivity(intent)
+            }
+            catch (e: SecurityException){
+                Toast.makeText(requireContext(), "Call permission not granted", Toast.LENGTH_LONG).show()
             }
         }
     }
