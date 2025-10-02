@@ -1,23 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fake_call_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_col"
-    tools:context=".Fakecall_Fragment">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp">
 
-    <TextView
-        android:id="@+id/title"
+    <Button
+        android:id="@+id/btnFakeCall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="FAKE CALLS"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Fake Call" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnFakeVideoCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fake Video Call"
+        android:layout_marginTop="20dp" />
+
+    <!-- Child Fragment Container -->
+    <FrameLayout
+        android:id="@+id/fake_call_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

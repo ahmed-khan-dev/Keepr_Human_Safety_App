@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="dark_grey">#b3b5b7</color>
-    <color name="light_grey">#BDBDBD</color>
-    <color name="bg_col">#F5F5F5</color>
-    <color name="green">#81C784</color>
-</resources>
+
+
+    <resources>
+        <color name="black">#FF000000</color>
+        <color name="white">#FFFFFFFF</color>
+        <color name="dark_grey">#6F7378</color>
+        <color name="light_grey">#BDBDBD</color>
+        <color name="bg_col">#F5F5F5</color>
+        <color name="green">#81C784</color>
+        <color name="transparent">#00000000</color>
+        <color name="cyan">#54e1c2</color>
+        <color name="red">#FF0000</color>
+        <color name="lightpurple">#CBC3E3</color>
+        <color name="pinkpurple">#B069DB</color>
+        <color name="mediumpurple">#9370db</color>
+        <color name="mpurple">#9D00FF</color>
+        <color name="violet">#6E00B3</color>
+        <color name="darkviolet">#3C0061</color>
+        <color name="gradgreen">#00ffad</color>
+        <color name="gradblue">#0051ff</color>
+        <color name="lightblue">#0097ff</color>
+        <color name="gold">#ffd700</color>
+        <color name="grassgreen">#09B051</color>
+        <color name="neonorange">#FF5F1F</color>
+        <color name="glossyred">#FF5C5C</color>
+    </resources>
