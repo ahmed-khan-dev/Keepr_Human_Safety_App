@@ -1,35 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/bg_dialog"
+    android:elevation="8dp">
 
-    android:padding="16dp"
-    >
-
-    <EditText
-        android:id="@+id/et_name"
+    <!-- Name Field -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Name"/>
+        android:hint="Name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/primary"
+        app:boxStrokeWidthFocused="2dp"
+        app:startIconDrawable="@drawable/ic_person"
+        app:startIconTint="@color/dark_grey"
+        app:hintTextColor="@color/text_secondary">
 
-    <EditText
-        android:id="@+id/et_address"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Address Field -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Address"/>
+        android:hint="Address"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/primary"
+        app:boxStrokeWidthFocused="2dp"
+        app:startIconDrawable="@drawable/ic_map"
+        app:startIconTint="@color/dark_grey"
+        app:hintTextColor="@color/text_secondary"
+        android:layout_marginTop="16dp">
 
-    <EditText
-        android:id="@+id/et_phone"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Phone Field -->
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Phone"/>
+        android:hint="Phone"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/primary"
+        app:boxStrokeWidthFocused="2dp"
+        app:startIconDrawable="@drawable/fakecall_ic"
+        app:startIconTint="@color/dark_grey"
+        app:hintTextColor="@color/text_secondary"
+        android:layout_marginTop="16dp">
 
-    <Button
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_phone"
+            android:inputType="phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_secondary"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Save Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_save_contact"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:text="Save Contact"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
         android:layout_gravity="end"
-        android:layout_marginTop="8dp"/>
+        app:cornerRadius="12dp"
+        app:backgroundTint="@color/primary"
+        android:textColor="@color/text_on_primary"/>
 </LinearLayout>

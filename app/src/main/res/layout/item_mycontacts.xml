@@ -12,7 +12,6 @@
         android:layout_height="150dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="6dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,6 +23,7 @@
             android:background="@color/bg_col"
             android:padding="8dp">
 
+            <!-- Profile Image -->
             <ImageView
                 android:id="@+id/img_user"
                 android:layout_width="80dp"
@@ -33,6 +33,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!-- Name -->
             <TextView
                 android:id="@+id/name"
                 android:layout_width="0dp"
@@ -41,48 +42,71 @@
                 android:text="Ahmed Khan"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:textColor="@color/text_primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/img_user"
                 app:layout_constraintTop_toTopOf="@id/img_user" />
 
+            <!-- Address -->
             <TextView
                 android:id="@+id/address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="Address here"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/name"
                 app:layout_constraintTop_toBottomOf="@id/name" />
 
+            <!-- Phone -->
             <TextView
                 android:id="@+id/phone_number"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="+91 9876543210"
-                android:textColor="@android:color/black"
+                android:textColor="@color/primary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/name"
                 app:layout_constraintTop_toBottomOf="@id/address" />
 
-            <Button
+            <!-- Update Button with Icon -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_update"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_height="40dp"
                 android:text="Update"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                app:icon="@drawable/ic_edit"
+                app:iconTint="@color/text_on_primary"
+                app:iconGravity="start"
+                app:iconPadding="4dp"
+                app:cornerRadius="8dp"
+                app:backgroundTint="@color/primary"
+                android:textColor="@color/text_on_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_delete" />
+                app:layout_constraintEnd_toStartOf="@id/btn_delete"
+                android:layout_marginEnd="8dp"/>
 
-            <Button
+            <!-- Delete Button with Icon -->
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_delete"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:text="Delete"
+                android:textAllCaps="false"
+                android:textSize="13sp"
+                app:icon="@drawable/ic_delete"
+                app:iconTint="@color/text_on_primary"
+                app:iconGravity="start"
+                app:iconPadding="4dp"
+                app:cornerRadius="8dp"
+                app:backgroundTint="@color/error"
+                android:textColor="@color/text_on_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

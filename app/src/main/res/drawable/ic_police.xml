@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="?attr/colorControlNormal">
+
+    <!-- Shield Shape -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M12,2L4,5v6c0,5.55 3.84,10.74 8,12 4.16,-1.26 8,-6.45 8,-12V5l-8,-3zM12,19c-2.76,0 -5,-2.24 -5,-5s2.24,-5 5,-5 5,2.24 5,5 -2.24,5 -5,5z"/>
+
+    <!-- Star Inside -->
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M12,9.5l0.94,2.03 2.24,0.2 -1.69,1.46 0.52,2.22L12,14.77l-2.01,1.64 0.52,-2.22 -1.69,-1.46 2.24,-0.2L12,9.5z"/>
+</vector>

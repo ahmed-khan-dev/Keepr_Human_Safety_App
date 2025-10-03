@@ -122,6 +122,7 @@ class Contacts_Fragment : Fragment() {
         }
 
         dialog.show()
+
     }
 
     private fun showUpdateContactDialog(position: Int) {
@@ -171,6 +172,8 @@ class Contacts_Fragment : Fragment() {
         }
 
         dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog.window?.setDimAmount(0.6f)
     }
 
     private fun deleteContact(position: Int) {

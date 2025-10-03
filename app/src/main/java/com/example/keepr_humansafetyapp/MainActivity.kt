@@ -1,6 +1,7 @@
 package com.example.keepr_humansafetyapp
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -72,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         }
         transaction.commit()
     }
+
+
 }
 //git remote add origin https://github.com/ahmed-khan-dev/Keepr_Human_Safety_App.git
 //git branch -M main

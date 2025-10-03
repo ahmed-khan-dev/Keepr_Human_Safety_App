@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Google Map -->
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -18,22 +18,41 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="16dp">
+        android:padding="12dp">
 
-        <Button
+        <!-- Track Me Button -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnTrackMe"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Track Me"
-            android:padding="12dp"
-            android:layout_marginEnd="12dp"/>
+            android:layout_height="40dp"
+            android:layout_marginEnd="8dp"
+            android:text="Track"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textColor="@color/text_on_primary"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_location"
+            app:iconGravity="start"
+            app:iconTint="@color/text_on_primary"
+            app:iconSize="16dp"
+            app:backgroundTint="@color/primary" />
 
-        <Button
+        <!-- Nearest Police Button -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/nearestpolice"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nearest Police"
-            android:padding="12dp"/>
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:text="Police"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:textColor="@color/text_on_primary"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_police"
+            app:iconGravity="start"
+            app:iconTint="@color/text_on_primary"
+            app:iconSize="16dp"
+            app:backgroundTint="@color/primary_dark" />
     </LinearLayout>
 
 </FrameLayout>

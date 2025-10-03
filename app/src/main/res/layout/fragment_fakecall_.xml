@@ -1,30 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fake_call_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="20dp">
+    android:background="@color/black">
 
-    <Button
-        android:id="@+id/btnFakeCall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fake Call" />
-
-    <Button
-        android:id="@+id/btnFakeVideoCall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fake Video Call"
-        android:layout_marginTop="20dp" />
-
-    <!-- Child Fragment Container -->
+    <!-- Fullscreen Call Container -->
     <FrameLayout
         android:id="@+id/fake_call_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:background="@color/black" />
+
+    <!-- Top Buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="top">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFakeCall"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:text="Fake Call"
+            android:textAllCaps="false"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@color/primary"
+            android:textColor="@color/text_on_primary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnFakeVideoCall"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="Fake Video Call"
+            android:textAllCaps="false"
+            app:cornerRadius="8dp"
+            app:backgroundTint="@color/primary_dark"
+            android:textColor="@color/text_on_primary" />
+    </LinearLayout>
+
+</FrameLayout>

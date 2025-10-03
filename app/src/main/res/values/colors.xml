@@ -1,27 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base Colors -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 
+    <!-- Grey Scale -->
+    <color name="dark_grey">#6F7378</color>
+    <color name="light_grey">#BDBDBD</color>
+    <color name="bg_col">#F5F5F5</color>
 
-    <resources>
-        <color name="black">#FF000000</color>
-        <color name="white">#FFFFFFFF</color>
-        <color name="dark_grey">#6F7378</color>
-        <color name="light_grey">#BDBDBD</color>
-        <color name="bg_col">#F5F5F5</color>
-        <color name="green">#81C784</color>
-        <color name="transparent">#00000000</color>
-        <color name="cyan">#54e1c2</color>
-        <color name="red">#FF0000</color>
-        <color name="lightpurple">#CBC3E3</color>
-        <color name="pinkpurple">#B069DB</color>
-        <color name="mediumpurple">#9370db</color>
-        <color name="mpurple">#9D00FF</color>
-        <color name="violet">#6E00B3</color>
-        <color name="darkviolet">#3C0061</color>
-        <color name="gradgreen">#00ffad</color>
-        <color name="gradblue">#0051ff</color>
-        <color name="lightblue">#0097ff</color>
-        <color name="gold">#ffd700</color>
-        <color name="grassgreen">#09B051</color>
-        <color name="neonorange">#FF5F1F</color>
-        <color name="glossyred">#FF5C5C</color>
-    </resources>
+    <!-- Old Theme Colors (kept for compatibility) -->
+    <color name="green">#81C784</color>
+    <color name="cyan">#54e1c2</color>
+    <color name="red">#FF0000</color>
+    <color name="lightpurple">#CBC3E3</color>
+    <color name="pinkpurple">#B069DB</color>
+    <color name="mediumpurple">#9370db</color>
+    <color name="mpurple">#9D00FF</color>
+    <color name="violet">#6E00B3</color>
+    <color name="darkviolet">#3C0061</color>
+    <color name="gradgreen">#00ffad</color>
+    <color name="gradblue">#0051ff</color>
+    <color name="lightblue">#0097ff</color>
+    <color name="gold">#ffd700</color>
+    <color name="grassgreen">#09B051</color>
+    <color name="neonorange">#FF5F1F</color>
+    <color name="glossyred">#FF5C5C</color>
+
+    <!-- Modern Brand Colors (Blue Theme) -->
+    <color name="primary">#1976D2</color>          <!-- Medium Blue -->
+    <color name="primary_dark">#0D47A1</color>    <!-- Deep Blue -->
+    <color name="primary_light">#63A4FF</color>   <!-- Light Blue -->
+    <color name="accent">#09B051</color>          <!-- Green Accent -->
+
+    <!-- Surface & Background -->
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F8F9FA</color>
+    <color name="background">#F5F9FF</color>
+    <color name="background_dark">#E3F2FD</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#5F6368</color>
+    <color name="text_hint">#9E9E9E</color>
+    <color name="text_disabled">#BDBDBD</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <!-- Border & Divider Colors -->
+    <color name="border_light">#E0E0E0</color>
+    <color name="border_medium">#BDBDBD</color>
+    <color name="divider">#E5E5E5</color>
+
+    <!-- Status Colors -->
+    <color name="success">#09B051</color>
+    <color name="success_light">#E8F5E9</color>
+    <color name="warning">#FFA726</color>
+    <color name="warning_light">#FFF3E0</color>
+    <color name="error">#FF5C5C</color>
+    <color name="error_light">#FFEBEE</color>
+    <color name="info">#0097ff</color>
+    <color name="info_light">#E3F2FD</color>
+
+    <!-- Emergency/Safety Colors -->
+    <color name="emergency_red">#D32F2F</color>
+    <color name="emergency_red_bg">#FFCDD2</color>
+    <color name="safe_green">#388E3C</color>
+    <color name="safe_green_bg">#C8E6C9</color>
+    <color name="alert_orange">#FF5F1F</color>
+    <color name="alert_orange_bg">#FFE0B2</color>
+
+    <!-- Button Colors -->
+    <color name="button_primary">#1976D2</color>         <!-- Blue -->
+    <color name="button_primary_pressed">#0D47A1</color> <!-- Dark Blue -->
+    <color name="button_secondary">#E0E0E0</color>
+    <color name="button_disabled">#F5F5F5</color>
+
+    <!-- Card & Elevation Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="card_shadow">#1A000000</color>
+    <color name="elevation_overlay">#0D000000</color>
+
+    <!-- Bottom Navigation Colors -->
+    <color name="bottom_nav_selected">#1976D2</color> <!-- Blue -->
+    <color name="bottom_nav_unselected">#6F7378</color> <!-- Grey -->
+    <color name="bottom_nav_background">#FFFFFF</color>
+
+    <!-- Ripple Effect Colors -->
+    <color name="ripple_primary">#331976D2</color>
+    <color name="ripple_light">#1A000000</color>
+    <color name="ripple_surface">#0D000000</color>
+
+    <!-- Overlay Colors -->
+    <color name="scrim">#52000000</color>
+    <color name="overlay_dark">#80000000</color>
+    <color name="overlay_light">#33FFFFFF</color>
+</resources>
