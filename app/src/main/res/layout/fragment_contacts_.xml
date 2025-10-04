@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_col"
+    android:background="@drawable/background_img"
     tools:context=".Contacts_Fragment">
 
     <!-- Title -->
@@ -16,7 +16,7 @@
         android:text="Contacts"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/primary"
+        android:textColor="@color/primary_accent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -25,22 +25,22 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_contact"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:text="Add Contact"
         android:textAllCaps="false"
         android:textSize="14sp"
-        app:cornerRadius="12dp"
+        app:cornerRadius="24dp"
         app:icon="@drawable/ic_person"
         app:iconTint="@color/text_on_primary"
         app:iconGravity="start"
         app:iconPadding="8dp"
-        app:backgroundTint="@color/primary"
+        app:backgroundTint="@color/primary_accent"
         android:textColor="@color/text_on_primary"
-        android:layout_marginTop="12dp"
+        android:elevation="4dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/contacts_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
     <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
@@ -54,4 +54,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/item_mycontacts" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

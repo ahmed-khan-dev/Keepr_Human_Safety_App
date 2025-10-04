@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/abh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_col"
+    android:background="@drawable/background_img"
     tools:context=".About_Fragment">
 
     <TextView
@@ -15,121 +13,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:gravity="center"
         android:text="ABOUT"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/primary_accent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/redcard"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_margin="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        app:cardBackgroundColor="#FF5D76"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="@dimen/dimen_16"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/features_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title">
-
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/sostitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:elevation="@dimen/dimen_16"
-        android:text="SOS"
-        android:textColor="@color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/redcard"
-        app:layout_constraintTop_toTopOf="@id/redcard" />
-
-    <TextView
-        android:id="@+id/soscontent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:elevation="@dimen/dimen_16"
-        android:text="@string/sos_card_content"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/redcard"
-        app:layout_constraintEnd_toStartOf="@id/sos_ic"
-        app:layout_constraintStart_toStartOf="@id/redcard"
-        app:layout_constraintTop_toBottomOf="@id/sostitle" />
-
-    <ImageView
-        android:id="@+id/sos_ic"
-        android:layout_width="89dp"
-        android:layout_height="78dp"
-        android:elevation="@dimen/dimen_16"
-        android:src="@drawable/sos"
-        app:layout_constraintBottom_toBottomOf="@id/redcard"
-        app:layout_constraintEnd_toEndOf="@id/redcard"
-        app:layout_constraintTop_toTopOf="@id/redcard" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/bluecard"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="20dp"
-        android:layout_marginTop="28dp"
-        app:cardBackgroundColor="#54e1c2"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="@dimen/dimen_16"
-        app:layout_constraintTop_toBottomOf="@id/redcard"
-        tools:layout_editor_absoluteX="20dp" />
-
-    <ImageView
-        android:id="@+id/tracker_ic"
-        android:layout_width="89dp"
-        android:layout_height="78dp"
-        android:elevation="@dimen/dimen_16"
-        android:src="@drawable/tracker"
-        app:layout_constraintBottom_toBottomOf="@id/bluecard"
-        app:layout_constraintEnd_toEndOf="@id/bluecard"
-        app:layout_constraintTop_toTopOf="@id/bluecard" />
-
-    <TextView
-        android:id="@+id/trackertitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:elevation="@dimen/dimen_16"
-        android:text="Tracker"
-        android:textColor="@color/white"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@id/bluecard"
-        app:layout_constraintTop_toTopOf="@id/bluecard" />
-
-    <TextView
-        android:id="@+id/trackercontent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:elevation="@dimen/dimen_16"
-        android:text="@string/tracker_card_content"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/bluecard"
-        app:layout_constraintEnd_toStartOf="@id/tracker_ic"
-        app:layout_constraintStart_toStartOf="@id/bluecard"
-
-        app:layout_constraintTop_toBottomOf="@id/trackertitle" />
-
-
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

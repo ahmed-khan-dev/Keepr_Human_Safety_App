@@ -5,9 +5,9 @@
     <solid android:color="@color/surface" />
 
     <!-- Rounded corners -->
-    <corners android:radius="16dp" />
+    <corners android:radius="25dp" />
 
     <!-- Optional shadow/elevation simulation -->
-    <padding android:left="8dp" android:top="8dp"
-        android:right="8dp" android:bottom="8dp"/>
+    <padding android:left="12dp" android:top="12dp"
+        android:right="12dp" android:bottom="12dp"/>
 </shape>

@@ -3,21 +3,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="24dp"
     android:gravity="center_horizontal"
-    android:background="@color/bg_col"
+    android:background="@drawable/background_img"
+    android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <!-- App Logo -->
     <ImageView
         android:id="@+id/appLogo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_app_logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/app_logo"
         android:contentDescription="App Logo"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginTop="48dp"
+        android:layout_marginBottom="16dp" />
 
     <!-- Title -->
     <TextView
@@ -25,9 +25,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="@color/primary_dark"
+        android:textColor="@color/primary_accent"
         android:layout_marginBottom="32dp"/>
 
     <!-- Email Field -->
@@ -35,19 +35,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
-        app:boxStrokeColor="@color/primary"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/primary_accent"
+        app:boxBackgroundColor="@color/white"
         app:boxStrokeWidthFocused="2dp"
         app:startIconDrawable="@drawable/ic_email"
-        app:startIconTint="@color/primary_dark"
-        app:hintTextColor="@color/text_primary">
+        app:startIconTint="@color/primary_accent"
+        app:hintTextColor="@color/primary_accent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_primary"
-
+            android:textColor="@color/black"
             android:inputType="textEmailAddress"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,18 +58,19 @@
         android:layout_marginTop="16dp"
         android:hint="Password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/primary"
+        app:boxStrokeColor="@color/primary_accent"
+        app:boxBackgroundColor="@color/white"
         app:boxStrokeWidthFocused="2dp"
         app:endIconMode="password_toggle"
         app:startIconDrawable="@drawable/ic_lock"
-        app:startIconTint="@color/primary_dark"
-        app:hintTextColor="@color/text_primary">
+        app:startIconTint="@color/primary_accent"
+        app:hintTextColor="@color/primary_accent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/text_primary"
+            android:textColor="@color/black"
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,8 +83,8 @@
         android:text="Login"
         android:textAllCaps="false"
         app:cornerRadius="12dp"
-        app:backgroundTint="@color/primary"
-        android:textColor="@color/text_on_primary"
+        app:backgroundTint="@color/primary_accent"
+        android:textColor="@color/white"
         android:elevation="4dp"/>
 
     <!-- Go to Register Button -->
@@ -95,8 +96,9 @@
         android:text="Go to Register"
         android:textAllCaps="false"
         app:cornerRadius="12dp"
+        android:backgroundTint="@color/white"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeColor="@color/primary"
+        app:strokeColor="@color/primary_accent"
         app:strokeWidth="1dp"
-        android:textColor="@color/primary"/>
+        android:textColor="@color/primary_accent"/>
 </LinearLayout>

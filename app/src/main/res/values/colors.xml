@@ -95,4 +95,14 @@
     <color name="scrim">#52000000</color>
     <color name="overlay_dark">#80000000</color>
     <color name="overlay_light">#33FFFFFF</color>
+    <color name="light_yellow">#FFD54F</color>
+
+    <color name="primary_accent">#FF9800</color> <!-- Amber/Orange -->
+    <color name="unselected_grey">#757575</color>
+    <color name="divider_grey">#E0E0E0</color>
+    <color name="dark_red">#B71C1C</color> <!-- Dark Red Shade -->
+
+
+
+
 </resources>

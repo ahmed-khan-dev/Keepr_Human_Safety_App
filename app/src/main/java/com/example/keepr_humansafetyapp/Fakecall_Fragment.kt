@@ -11,6 +11,7 @@ class Fakecall_Fragment : Fragment() {
 
     private lateinit var btnFakeCall: Button
     private lateinit var btnFakeVideoCall: Button
+    private lateinit var fakeCallContainer: View
 
     companion object {
         fun newInstance() = Fakecall_Fragment()
@@ -28,13 +29,19 @@ class Fakecall_Fragment : Fragment() {
 
         btnFakeCall = view.findViewById(R.id.btnFakeCall)
         btnFakeVideoCall = view.findViewById(R.id.btnFakeVideoCall)
+        fakeCallContainer = view.findViewById(R.id.fake_call_container)
+
+        // ✅ Default: show background image
+        fakeCallContainer.setBackgroundResource(R.drawable.background_img)
 
         btnFakeCall.setOnClickListener {
             val transaction = childFragmentManager.beginTransaction()
-            // Replace old fragment (if any) with new one
             transaction.replace(R.id.fake_call_container, FakeCallScreenFragment.newInstance())
             transaction.addToBackStack(null)
             transaction.commit()
+
+            // ✅ hide bg when fragment active
+            fakeCallContainer.setBackgroundResource(android.R.color.black)
         }
 
         btnFakeVideoCall.setOnClickListener {
@@ -42,7 +49,17 @@ class Fakecall_Fragment : Fragment() {
             transaction.replace(R.id.fake_call_container, FakeVideoCallFragment.newInstance())
             transaction.addToBackStack(null)
             transaction.commit()
+
+            // ✅ hide bg when fragment active
+            fakeCallContainer.setBackgroundResource(android.R.color.black)
         }
 
+        // ✅ Listen for back stack changes
+        childFragmentManager.addOnBackStackChangedListener {
+            if (childFragmentManager.backStackEntryCount == 0) {
+                // no child fragments => restore background image
+                fakeCallContainer.setBackgroundResource(R.drawable.background_img)
+            }
+        }
     }
 }

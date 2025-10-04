@@ -21,38 +21,42 @@
         android:padding="12dp">
 
         <!-- Track Me Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnTrackMe"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:text="Track"
-            android:textSize="12sp"
-            android:textAllCaps="false"
-            android:textColor="@color/text_on_primary"
-            app:cornerRadius="20dp"
-            app:icon="@drawable/ic_location"
-            app:iconGravity="start"
-            app:iconTint="@color/text_on_primary"
-            app:iconSize="16dp"
-            app:backgroundTint="@color/primary" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnTrackMe"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:text="Track"
+        android:textSize="12sp"
+        android:textAllCaps="false"
+        android:textColor="@color/primary_accent"
+        app:cornerRadius="24dp"
+        app:icon="@drawable/ic_location"
+        app:iconGravity="start"
+        app:iconTint="@color/primary_accent"
+        android:backgroundTint="@color/white"
+        app:iconSize="16dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:strokeColor="@color/primary_accent"
+        app:strokeWidth="1dp"/>
 
         <!-- Nearest Police Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/nearestpolice"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:text="Police"
             android:textSize="12sp"
             android:textAllCaps="false"
             android:textColor="@color/text_on_primary"
-            app:cornerRadius="20dp"
+            app:cornerRadius="24dp"
             app:icon="@drawable/ic_police"
             app:iconGravity="start"
             app:iconTint="@color/text_on_primary"
             app:iconSize="16dp"
-            app:backgroundTint="@color/primary_dark" />
+            app:backgroundTint="@color/primary_accent"/>
+
     </LinearLayout>
 
 </FrameLayout>
