@@ -29,15 +29,15 @@
         android:text="Track"
         android:textSize="12sp"
         android:textAllCaps="false"
-        android:textColor="@color/primary_accent"
+        android:textColor="@color/bottom_nav_selected"
         app:cornerRadius="24dp"
         app:icon="@drawable/ic_location"
         app:iconGravity="start"
-        app:iconTint="@color/primary_accent"
+        app:iconTint="@color/bottom_nav_selected"
         android:backgroundTint="@color/white"
         app:iconSize="16dp"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeColor="@color/primary_accent"
+        app:strokeColor="@color/bottom_nav_selected"
         app:strokeWidth="1dp"/>
 
         <!-- Nearest Police Button -->
@@ -55,7 +55,7 @@
             app:iconGravity="start"
             app:iconTint="@color/text_on_primary"
             app:iconSize="16dp"
-            app:backgroundTint="@color/primary_accent"/>
+            app:backgroundTint="@color/bottom_nav_selected"/>
 
     </LinearLayout>
 

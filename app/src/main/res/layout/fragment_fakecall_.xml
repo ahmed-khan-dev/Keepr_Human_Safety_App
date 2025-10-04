@@ -33,14 +33,14 @@
             android:text="FakeCall"
             android:textAllCaps="false"
             android:textSize="14sp"
-            android:textColor="@color/primary_accent"
+            android:textColor="@color/bottom_nav_selected"
             app:cornerRadius="24dp"
             app:icon="@drawable/fakecall_ic"
             app:iconGravity="start"
-            app:iconTint="@color/primary_accent"
+            app:iconTint="@color/bottom_nav_selected"
             app:iconSize="18dp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            app:strokeColor="@color/primary_accent"
+            app:strokeColor="@color/bottom_nav_selected"
             app:strokeWidth="1dp"/>
 
         <!-- Fake Video Call Button (Filled Style) -->
@@ -59,7 +59,7 @@
             app:iconGravity="start"
             app:iconTint="@color/text_on_primary"
             app:iconSize="18dp"
-            app:backgroundTint="@color/primary_accent"/>
+            app:backgroundTint="@color/bottom_nav_selected"/>
     </LinearLayout>
 
 </FrameLayout>

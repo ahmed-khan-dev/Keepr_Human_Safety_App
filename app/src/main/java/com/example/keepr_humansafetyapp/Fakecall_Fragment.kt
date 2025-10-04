@@ -32,7 +32,7 @@ class Fakecall_Fragment : Fragment() {
         fakeCallContainer = view.findViewById(R.id.fake_call_container)
 
         // ✅ Default: show background image
-        fakeCallContainer.setBackgroundResource(R.drawable.background_img)
+        fakeCallContainer.setBackgroundResource(R.color.white)
 
         btnFakeCall.setOnClickListener {
             val transaction = childFragmentManager.beginTransaction()
@@ -58,7 +58,7 @@ class Fakecall_Fragment : Fragment() {
         childFragmentManager.addOnBackStackChangedListener {
             if (childFragmentManager.backStackEntryCount == 0) {
                 // no child fragments => restore background image
-                fakeCallContainer.setBackgroundResource(R.drawable.background_img)
+                fakeCallContainer.setBackgroundResource(R.color.white)
             }
         }
     }

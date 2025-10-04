@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@drawable/background_img"
+    android:background="@color/white"
     android:padding="24dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -27,7 +27,7 @@
         android:text="Login"
         android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="@color/primary_accent"
+        android:textColor="@color/button_primary_pressed"
         android:layout_marginBottom="32dp"/>
 
     <!-- Email Field -->
@@ -36,12 +36,12 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/primary_accent"
+        app:boxStrokeColor="@color/bottom_nav_selected"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeWidthFocused="2dp"
         app:startIconDrawable="@drawable/ic_email"
-        app:startIconTint="@color/primary_accent"
-        app:hintTextColor="@color/primary_accent">
+        app:startIconTint="@color/bottom_nav_selected"
+        app:hintTextColor="@color/bottom_nav_selected">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
@@ -58,13 +58,13 @@
         android:layout_marginTop="16dp"
         android:hint="Password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:boxStrokeColor="@color/primary_accent"
+        app:boxStrokeColor="@color/bottom_nav_selected"
         app:boxBackgroundColor="@color/white"
         app:boxStrokeWidthFocused="2dp"
         app:endIconMode="password_toggle"
         app:startIconDrawable="@drawable/ic_lock"
-        app:startIconTint="@color/primary_accent"
-        app:hintTextColor="@color/primary_accent">
+        app:startIconTint="@color/bottom_nav_selected"
+        app:hintTextColor="@color/bottom_nav_selected">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
@@ -83,7 +83,7 @@
         android:text="Login"
         android:textAllCaps="false"
         app:cornerRadius="12dp"
-        app:backgroundTint="@color/primary_accent"
+        app:backgroundTint="@color/bottom_nav_selected"
         android:textColor="@color/white"
         android:elevation="4dp"/>
 
@@ -98,7 +98,7 @@
         app:cornerRadius="12dp"
         android:backgroundTint="@color/white"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-        app:strokeColor="@color/primary_accent"
+        app:strokeColor="@color/bottom_nav_selected"
         app:strokeWidth="1dp"
-        android:textColor="@color/primary_accent"/>
+        android:textColor="@color/bottom_nav_selected"/>
 </LinearLayout>

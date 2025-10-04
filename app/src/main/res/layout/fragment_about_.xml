@@ -5,7 +5,7 @@
     android:id="@+id/abh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_img"
+    android:background="@color/white"
     tools:context=".About_Fragment">
 
     <TextView
@@ -16,7 +16,7 @@
         android:text="ABOUT"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/primary_accent"
+        android:textColor="@color/button_primary_pressed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

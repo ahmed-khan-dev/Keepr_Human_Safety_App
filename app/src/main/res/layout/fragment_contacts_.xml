@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_img"
+    android:background="@color/white"
     tools:context=".Contacts_Fragment">
 
     <!-- Title -->
@@ -16,7 +16,7 @@
         android:text="Contacts"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/primary_accent"
+        android:textColor="@color/button_primary_pressed"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -34,7 +34,7 @@
         app:iconTint="@color/text_on_primary"
         app:iconGravity="start"
         app:iconPadding="8dp"
-        app:backgroundTint="@color/primary_accent"
+        app:backgroundTint="@color/bottom_nav_selected"
         android:textColor="@color/text_on_primary"
         android:elevation="4dp"
         android:layout_marginTop="16dp"
